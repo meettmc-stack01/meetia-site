@@ -1,0 +1,191 @@
+---
+import '../styles/global.css';
+import { getCollection } from 'astro:content';
+
+const contactUrl = 'https://ws.formzu.net/fgen/S9830388/';
+const currentYear = new Date().getFullYear();
+const latestPosts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="MeetiAは、嗅覚反応分析士入門講座・基礎講座の認定教室です。IMチェック体験と嗅覚反応分析の講座をご案内しています。"
+    />
+    <title>MeetiA | 嗅覚反応分析士入門講座・基礎講座 認定教室</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="MeetiA トップページ">
+        <span class="brand-name">MeetiA</span>
+        <span class="brand-subtitle">嗅覚反応分析士入門講座・基礎講座　認定教室</span>
+      </a>
+
+      <button class="menu-button" type="button" aria-controls="site-nav" aria-expanded="false" data-menu-button>
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+        <span class="sr-only">メニューを開く</span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="メインメニュー" data-site-nav>
+        <a href="/about/">嗅覚反応分析とは</a>
+        <a href="/im-check/">IMチェック体験</a>
+        <a href="/courses/">講座案内</a>
+        <a href="/blog/">読みもの</a>
+        <a href="/faq/">よくある質問</a>
+        <a href="/profile/">プロフィール</a>
+        <a class="nav-contact" href={contactUrl} target="_blank" rel="noopener noreferrer">お問い合わせ</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">香りを手がかりに、自分を知る</p>
+          <h1>香りの感じ方から、今の自分に合う整え方を見つける。</h1>
+          <p>
+            MeetiAでは、8種類の香りを使ったIMチェック体験と、嗅覚反応分析を学ぶ講座をご案内しています。
+          </p>
+          <div class="button-row">
+            <a class="button primary" href="/im-check/">IMチェックを体験する</a>
+            <a class="button secondary" href="/courses/">講座について見る</a>
+          </div>
+        </div>
+        <div class="hero-image">
+          <img src="/images/bottles.jpg" alt="IMチェックで使用するAからHの専用ボトル" />
+        </div>
+      </section>
+
+      <section class="entry-grid" aria-label="主な入口">
+        <a class="entry-card" href="/im-check/">
+          <span class="entry-icon entry-icon-green" aria-hidden="true">
+            <img src="/images/leaf2.png" alt="" />
+          </span>
+          <span>自分を知りたい方へ</span>
+          <p>香りを使って、今の心身の傾向を見てみたい方へ。</p>
+        </a>
+        <a class="entry-card" href="/about/">
+          <span class="entry-icon entry-icon-blue" aria-hidden="true">
+            <img src="/images/note1.png" alt="" />
+          </span>
+          <span>しくみを知りたい方へ</span>
+          <p>嗅覚反応分析やIMチェックの考え方を知りたい方へ。</p>
+        </a>
+        <a class="entry-card" href="/blog/">
+          <span class="entry-icon entry-icon-pink" aria-hidden="true">
+            <img src="/images/pen1.png" alt="" />
+          </span>
+          <span>香りを暮らしに活かしたい方へ</span>
+          <p>精油、セルフケア、季節のブレンドレシピを読む。</p>
+        </a>
+      </section>
+
+      <section class="split-section">
+        <div>
+          <p class="section-label">For first-time visitors</p>
+          <h2>はじめての方へ</h2>
+          <p>
+            嗅覚反応分析は、香りへの反応を通して自分の傾向を知り、自分に合う選択を考えるための方法です。
+          </p>
+          <a class="text-link" href="/about/">詳しく見る</a>
+        </div>
+      </section>
+
+      <section class="split-section reverse">
+        <div class="chart-panel">
+          <img src="/images/chart-clean.png" alt="嗅覚反応分析 IMチェックのチャート" />
+        </div>
+        <div>
+          <p class="section-label">IM check experience</p>
+          <h2>IMチェック体験</h2>
+          <p>
+            8種類の香りを嗅ぎ、好きな順に並べることで、今の傾向をチャートで見える化します。
+          </p>
+          <a class="button secondary" href="/im-check/">体験の流れを見る</a>
+        </div>
+      </section>
+
+      <section class="course-section">
+        <p class="section-label">Courses</p>
+        <h2>講座案内</h2>
+        <p>
+          まず知りたい方には入門講座、自分や家族のセルフケアに活かしたい方には基礎講座をご案内しています。
+        </p>
+        <div class="course-grid">
+          <article class="course-card">
+            <h3>入門講座</h3>
+            <p>香りと心身の関わり、精油の基礎、嗅覚反応分析の考え方を学びます。</p>
+          </article>
+          <article class="course-card">
+            <h3>基礎講座</h3>
+            <p>IMチェックキットを使い、自分でチェックとチャート作成ができるようになる講座です。</p>
+          </article>
+        </div>
+        <a class="button secondary" href="/courses/">講座案内を見る</a>
+      </section>
+
+      <section class="blog-section">
+        <p class="section-label">Journal</p>
+        <h2>香りとセルフケアの読みもの</h2>
+        <p>
+          嗅覚反応分析、精油の紹介、季節の悩みに合わせたブレンドレシピなど、日々のセルフケアに役立つ話を少しずつ更新します。
+        </p>
+        <div class="blog-grid">
+          {
+            latestPosts.map((post) => (
+              <a class="blog-card" href={`/blog/${post.slug}/`}>
+                <span>{post.data.title}</span>
+                <p>{post.data.description}</p>
+              </a>
+            ))
+          }
+        </div>
+        <a class="text-link" href="/blog/">読みもの一覧を見る</a>
+      </section>
+
+      <section class="contact-cta">
+        <h2>体験・講座についてのご相談はこちら</h2>
+        <a class="button primary" href={contactUrl} target="_blank" rel="noopener noreferrer">お問い合わせフォームへ</a>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p class="brand-name">MeetiA</p>
+      <p>嗅覚反応分析士入門講座・基礎講座　認定教室</p>
+      <a href="/privacy/">プライバシーポリシー</a>
+      <small>© 2018–{currentYear} MeetiA</small>
+    </footer>
+
+    <script>
+      const menuButton = document.querySelector('[data-menu-button]');
+      const siteNav = document.querySelector('[data-site-nav]');
+
+      menuButton?.addEventListener('click', () => {
+        const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+        menuButton.setAttribute('aria-expanded', String(!isOpen));
+        siteNav?.classList.toggle('is-open', !isOpen);
+      });
+
+      siteNav?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          menuButton?.setAttribute('aria-expanded', 'false');
+          siteNav.classList.remove('is-open');
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          menuButton?.setAttribute('aria-expanded', 'false');
+          siteNav?.classList.remove('is-open');
+        }
+      });
+    </script>
+  </body>
+</html>

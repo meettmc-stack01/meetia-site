@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<PageLayout
+  title="香りとセルフケアの読みもの"
+  description="嗅覚反応分析、IMチェック、精油、季節のセルフケア、ブレンドレシピについて少しずつ読めるページです。"
+  sectionLabel="Journal"
+>
+  <p>
+    嗅覚反応分析やIMチェック、精油のこと、季節のセルフケア、ブレンドレシピなど、香りを暮らしに活かすための読みものをまとめています。
+  </p>
+
+  <div class="post-list">
+    {
+      posts.map((post) => (
+        <article class="post-card">
+          {post.data.image && (
+            <a class="post-card-image" href={`/blog/${post.slug}/`} aria-label={`${post.data.title}を読む`}>
+              <img src={post.data.image} alt="" />
+            </a>
+          )}
+          <p class="post-date">
+            {post.data.pubDate.toLocaleDateString('ja-JP', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </p>
+          <h2>
+            <a href={`/blog/${post.slug}/`}>{post.data.title}</a>
+          </h2>
+          <p>{post.data.description}</p>
+          <a class="text-link" href={`/blog/${post.slug}/`}>読む</a>
+        </article>
+      ))
+    }
+  </div>
+</PageLayout>

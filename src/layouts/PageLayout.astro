@@ -1,0 +1,89 @@
+---
+import '../styles/global.css';
+
+const frontmatter = Astro.props.frontmatter ?? {};
+const title = Astro.props.title ?? frontmatter.title;
+const description = Astro.props.description ?? frontmatter.description;
+const sectionLabel = Astro.props.sectionLabel ?? frontmatter.sectionLabel ?? title;
+const contactUrl = 'https://ws.formzu.net/fgen/S9830388/';
+const currentYear = new Date().getFullYear();
+---
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description ?? 'MeetiAのページです。'} />
+    <title>{title} | MeetiA</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="MeetiA トップページ">
+        <span class="brand-name">MeetiA</span>
+        <span class="brand-subtitle">嗅覚反応分析士入門講座・基礎講座　認定教室</span>
+      </a>
+
+      <button class="menu-button" type="button" aria-controls="site-nav" aria-expanded="false" data-menu-button>
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+        <span class="sr-only">メニューを開く</span>
+      </button>
+
+      <nav class="site-nav" id="site-nav" aria-label="メインメニュー" data-site-nav>
+        <a href="/about/">嗅覚反応分析とは</a>
+        <a href="/im-check/">IMチェック体験</a>
+        <a href="/courses/">講座案内</a>
+        <a href="/blog/">読みもの</a>
+        <a href="/faq/">よくある質問</a>
+        <a href="/profile/">プロフィール</a>
+        <a class="nav-contact" href={contactUrl} target="_blank" rel="noopener noreferrer">お問い合わせ</a>
+      </nav>
+    </header>
+
+    <main class="page-main">
+      <article class="content-page">
+        <header class="page-hero">
+          <p class="section-label">{sectionLabel}</p>
+          <h1>{title}</h1>
+          {description && <p>{description}</p>}
+        </header>
+        <div class="page-body">
+          <slot />
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer">
+      <p class="brand-name">MeetiA</p>
+      <p>嗅覚反応分析士入門講座・基礎講座　認定教室</p>
+      <a href="/privacy/">プライバシーポリシー</a>
+      <small>© 2018–{currentYear} MeetiA</small>
+    </footer>
+
+    <script>
+      const menuButton = document.querySelector('[data-menu-button]');
+      const siteNav = document.querySelector('[data-site-nav]');
+
+      menuButton?.addEventListener('click', () => {
+        const isOpen = menuButton.getAttribute('aria-expanded') === 'true';
+        menuButton.setAttribute('aria-expanded', String(!isOpen));
+        siteNav?.classList.toggle('is-open', !isOpen);
+      });
+
+      siteNav?.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          menuButton?.setAttribute('aria-expanded', 'false');
+          siteNav.classList.remove('is-open');
+        });
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          menuButton?.setAttribute('aria-expanded', 'false');
+          siteNav?.classList.remove('is-open');
+        }
+      });
+    </script>
+  </body>
+</html>
