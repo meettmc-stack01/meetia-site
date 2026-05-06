@@ -730,6 +730,7 @@ h3 {
   .hero {
     gap: 30px;
     min-height: 680px;
+    margin-bottom: 14px;
     padding-top: 48px;
     padding-bottom: 250px;
     border-radius: 0 0 34% 34% / 0 0 5% 5%;
@@ -781,7 +782,7 @@ h3 {
   }
 
   .entry-grid {
-    padding: 0 18px 36px;
+    padding: 18px 18px 36px;
   }
 
   .site-links {
