@@ -1,0 +1,131 @@
+---
+description: MeetiA Astro site update rules
+globs:
+  - "**/*"
+alwaysApply: true
+---
+
+# MeetiA Site Update Rules
+
+This folder is the public Astro site for MeetiA. Treat it as the publishing source connected to GitHub and Cloudflare Pages.
+
+## Roles
+
+- Obsidian / `My code`: knowledge base, writing rules, rough drafts, article ideas.
+- `Meetia-site`: public website files, published blog Markdown, public images, site layout and styles.
+
+When using Obsidian knowledge, read it as reference material, but save public website changes in this `Meetia-site` folder.
+
+## Blog Articles
+
+Published blog articles live in:
+
+```txt
+src/content/blog/
+```
+
+Use this template as the starting point:
+
+```txt
+src/content/blog/_template.md
+```
+
+Article frontmatter should follow this shape:
+
+```md
+---
+title: "記事タイトル"
+description: "読みもの一覧や検索結果に表示する短い説明文"
+pubDate: 2026-05-06
+draft: false
+image: "/images/blog/example.webp"
+---
+```
+
+- Use lowercase ASCII filenames with hyphens, such as `rainy-season-aroma-selfcare.md`.
+- Set `draft: true` for drafts that should not be published.
+- Set `draft: false` only when the article should appear on the public site.
+- Keep each article focused on one theme when possible.
+- Prefer a warm, conversational, readable tone for MeetiA readers.
+- Use related links thoughtfully; avoid making readers loop without a clear next step.
+
+## Blog Images
+
+Blog images live in:
+
+```txt
+public/images/blog/
+```
+
+Use WebP for final blog images when possible.
+
+Frontmatter image paths should look like:
+
+```md
+image: "/images/blog/example.webp"
+```
+
+Markdown body image paths should look like:
+
+```md
+![画像の説明](/images/blog/example.webp)
+```
+
+Do not leave website-referenced images outside `public/images/blog/`.
+
+## Site Editing
+
+Main places to edit:
+
+```txt
+src/content/blog/
+public/images/blog/
+src/pages/
+src/styles/global.css
+```
+
+Avoid manual edits to generated or dependency folders:
+
+```txt
+.astro/
+dist/
+node_modules/
+```
+
+## Verification
+
+Before publishing, run:
+
+```sh
+npm run build
+```
+
+For local preview during editing, use:
+
+```sh
+npm run dev
+```
+
+Cloudflare Pages settings:
+
+```txt
+Build command: npm run build
+Build output directory: dist
+Production branch: main
+```
+
+## Publishing
+
+After changes are checked:
+
+1. Save files.
+2. Commit changes to `main`.
+3. Push to GitHub.
+4. Cloudflare Pages deploys automatically.
+
+Use clear commit messages, for example:
+
+```txt
+Add rainy season aroma article
+Update course page copy
+```
