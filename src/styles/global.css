@@ -150,7 +150,7 @@ main {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.88) 34%, rgba(255, 255, 255, 0.28) 57%, rgba(255, 255, 255, 0.06) 100%),
-    url("/images/hero-bottles-preview.png") center right / cover no-repeat;
+    url("/images/hero-bottles-preview.webp") center right / cover no-repeat;
   box-shadow: 0 18px 52px rgba(46, 91, 101, 0.1);
 }
 
@@ -253,7 +253,7 @@ h3 {
   object-fit: cover;
 }
 
-.hero-image img[src="/images/hero-bottles-preview.png"] {
+.hero-image img[src="/images/hero-bottles-preview.webp"] {
   aspect-ratio: auto;
   object-fit: contain;
 }
@@ -735,7 +735,7 @@ h3 {
     border-radius: 0 0 34% 34% / 0 0 5% 5%;
     background:
       linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0.86) 42%, rgba(255, 255, 255, 0.32) 70%, rgba(255, 255, 255, 0.08) 100%),
-      url("/images/hero-bottles-preview.png") center bottom / 860px auto no-repeat;
+      url("/images/hero-bottles-preview.webp") center bottom / 860px auto no-repeat;
   }
 
   h1 {

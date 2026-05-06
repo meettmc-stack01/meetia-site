@@ -2,7 +2,7 @@
 title: "はじめての方へ"
 description: "香りを使って自分を知るとはどういうことか、IMチェックと嗅覚反応分析の入口をやさしく紹介します。"
 pubDate: 2024-05-01
-image: "/images/hero-bottles-preview.png"
+image: "/images/hero-bottles-preview.webp"
 ---
 
 MeetiAでは、8種類の香りを使ったIMチェック体験と、嗅覚反応分析を学ぶ講座をご案内しています。
