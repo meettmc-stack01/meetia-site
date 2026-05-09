@@ -9,6 +9,7 @@ const currentYear = new Date().getFullYear();
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <meta
       name="description"
       content="MeetiAは、嗅覚反応分析士入門講座・基礎講座の認定教室です。IMチェック体験と嗅覚反応分析の講座をご案内しています。"
@@ -18,7 +19,10 @@ const currentYear = new Date().getFullYear();
   <body>
     <header class="site-header">
       <a class="brand" href="/" aria-label="MeetiA トップページ">
-        <span class="brand-name">MeetiA</span>
+        <picture class="brand-logo">
+          <source srcset="/images/logo/meetia-logo-horizontal.webp" type="image/webp" />
+          <img src="/images/logo/meetia-logo-horizontal.png" alt="MeetiA" width="1200" height="341" />
+        </picture>
         <span class="brand-subtitle">嗅覚反応分析士入門講座・基礎講座　認定教室</span>
       </a>
 
