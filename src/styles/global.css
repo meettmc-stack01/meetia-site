@@ -460,8 +460,16 @@ h3 {
   text-align: center;
 }
 
-.site-footer .brand-name {
-  margin-bottom: 0;
+.footer-logo {
+  display: block;
+  width: 150px;
+  margin-bottom: 2px;
+}
+
+.footer-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .site-footer small {
