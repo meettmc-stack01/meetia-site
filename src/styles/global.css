@@ -131,7 +131,7 @@ a {
 
 .nav-contact {
   color: var(--color-purple);
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .menu-button {
@@ -232,21 +232,22 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 48px;
-  padding: 12px 22px;
+  min-height: 44px;
+  padding: 10px 20px;
   border-radius: var(--radius);
-  font-weight: 700;
+  font-size: 0.96rem;
+  font-weight: 600;
 }
 
 .button.primary {
-  background: var(--color-purple);
+  background: #6f4a7f;
   color: white;
 }
 
 .button.secondary {
-  border: 1px solid rgba(94, 58, 112, 0.24);
+  border: 1px solid rgba(111, 74, 127, 0.26);
   background: white;
-  color: var(--color-purple);
+  color: #6f4a7f;
 }
 
 .hero-image {
@@ -792,11 +793,11 @@ h3 {
   }
 
   .button {
-    width: min(100%, 330px);
-    min-height: 42px;
-    padding: 9px 16px;
+    width: min(100%, 300px);
+    min-height: 40px;
+    padding: 8px 15px;
     margin-inline: auto;
-    font-size: 0.94rem;
+    font-size: 0.9rem;
   }
 
   .image-placeholder,
