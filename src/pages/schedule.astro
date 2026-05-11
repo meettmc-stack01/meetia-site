@@ -1,6 +1,7 @@
 ---
 import PageLayout from '../layouts/PageLayout.astro';
 const cortanuUrl = 'https://www.cortanu.co.jp/aroma/';
+const contactUrl = 'https://ws.formzu.net/fgen/S9830388/';
 ---
 
 <PageLayout
@@ -81,14 +82,30 @@ const cortanuUrl = 'https://www.cortanu.co.jp/aroma/';
   <blockquote>入学願書はコルテーヌHPよりダウンロードしてください。</blockquote>
 
   <div class="schedule-apply">
-    <h2>お申込み・お問い合わせ</h2>
-    <p>
-      <strong>コルテーヌスクール事業部</strong><br />
-      鹿児島市中町４−７ コルテーヌビル４F<br />
-      <a href="tel:0992225858">099-222-5858</a>（9時〜18時）
-    </p>
-    <a class="button primary" href={cortanuUrl} target="_blank" rel="noopener noreferrer">
-      コルテーヌのサイトへ
-    </a>
+    <div class="schedule-apply-block">
+      <p class="schedule-apply-label">上記の日程・会場へ申し込む</p>
+      <h2>コルテーヌへのお申込み</h2>
+      <p>
+        <strong>コルテーヌスクール事業部</strong><br />
+        鹿児島市中町４−７ コルテーヌビル４F<br />
+        <a href="tel:0992225858">099-222-5858</a>（9時〜18時）
+      </p>
+      <a class="button secondary" href={cortanuUrl} target="_blank" rel="noopener noreferrer">
+        コルテーヌのサイトへ
+      </a>
+    </div>
+
+    <div class="schedule-apply-divider"></div>
+
+    <div class="schedule-apply-block">
+      <p class="schedule-apply-label">オンライン・別日程・その他のご相談</p>
+      <h2>MeetiAへ直接お問い合わせ</h2>
+      <p>
+        オンラインでの体験・講座のご希望や、上記以外の日程でのご相談はMeetiAへどうぞ。
+      </p>
+      <a class="button primary" href={contactUrl} target="_blank" rel="noopener noreferrer">
+        お問い合わせフォームへ
+      </a>
+    </div>
   </div>
 </PageLayout>
