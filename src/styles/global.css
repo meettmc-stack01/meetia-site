@@ -79,6 +79,14 @@ a {
   border: 0;
 }
 
+.site-header-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(251, 254, 253, 0.94);
+  backdrop-filter: blur(14px);
+}
+
 .site-header {
   display: flex;
   align-items: center;
@@ -240,14 +248,14 @@ h3 {
 }
 
 .button.primary {
-  background: #6f4a7f;
+  background: var(--color-purple);
   color: white;
 }
 
 .button.secondary {
-  border: 1px solid rgba(111, 74, 127, 0.26);
+  border: 1px solid rgba(94, 58, 112, 0.26);
   background: white;
-  color: #6f4a7f;
+  color: var(--color-purple);
 }
 
 .hero-image {
@@ -297,6 +305,13 @@ h3 {
   border-radius: var(--radius);
   background: white;
   box-shadow: 0 10px 30px rgba(46, 91, 101, 0.07);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.entry-card:hover,
+.site-link-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 44px rgba(46, 91, 101, 0.14);
 }
 
 .entry-card {
@@ -375,7 +390,14 @@ h3 {
 }
 
 .contact-cta {
+  display: grid;
+  place-items: center;
+  gap: 24px;
   text-align: center;
+}
+
+.contact-cta h2 {
+  margin-bottom: 0;
 }
 
 .site-links {
@@ -680,13 +702,8 @@ h3 {
   }
 
   .site-header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
     gap: 14px;
     padding: 16px 18px;
-    background: rgba(251, 254, 253, 0.94);
-    backdrop-filter: blur(14px);
   }
 
   .brand-logo {
