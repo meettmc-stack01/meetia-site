@@ -692,9 +692,11 @@ h3 {
   background: var(--color-mist);
 }
 
-.page-body .schedule-request h2 {
-  margin-top: 8px;
+.page-body .schedule-request-lead {
   margin-bottom: 14px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text);
 }
 
 .page-body .schedule-request p {
