@@ -721,6 +721,7 @@ h3 {
 
 .course-cards {
   display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
   margin: 24px 0;
 }
@@ -1065,6 +1066,10 @@ h3 {
   .page-body tr:last-child td,
   .page-body td:last-child {
     border-bottom: 0;
+  }
+
+  .course-cards {
+    grid-template-columns: 1fr;
   }
 
   .schedule-apply {
