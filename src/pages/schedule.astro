@@ -1,0 +1,89 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+const cortanuUrl = 'https://www.cortanu.co.jp/aroma/';
+---
+
+<PageLayout
+  title="開催日程"
+  description="IMチェック体験・講座の最新スケジュールをご案内しています。お申込みはコルテーヌスクール事業部まで。"
+  sectionLabel="Schedule"
+>
+  <p class="schedule-venue">
+    <strong>会場</strong>　コルテーヌビル４F　鹿児島市中町４−７
+  </p>
+
+  <h2>体験セッション</h2>
+  <p>まずは香りを体験してみたい方へ。8種類の香りを使ったIMチェックを体験できるセッションです。</p>
+
+  <div class="date-grid">
+    <div class="date-card">
+      <div class="date-card-date">5/21（木）</div>
+      <div class="date-card-times">
+        ① 13:00〜<br />
+        ② 14:30〜<br />
+        ③ 16:00〜
+      </div>
+    </div>
+    <div class="date-card">
+      <div class="date-card-date">5/23（土）</div>
+      <div class="date-card-times">
+        ① 13:00〜<br />
+        ② 14:30〜<br />
+        ③ 16:00〜
+      </div>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>プラン</th><th>料金（税込）</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>クラフト有り</td><td>6,050円</td></tr>
+      <tr><td>クラフト無し</td><td>4,400円</td></tr>
+    </tbody>
+  </table>
+
+  <blockquote>申込〆切：開催3日前</blockquote>
+
+  <h2>講座</h2>
+  <p>嗅覚反応分析士 入門講座・基礎講座のスケジュールです。</p>
+
+  <div class="course-cards">
+    <div class="course-card">
+      <p class="course-card-label">平日クラス</p>
+      <p class="course-card-date">5/28（木）</p>
+      <p class="course-card-time">10:00〜17:00（計6時間 / 昼休憩1時間）</p>
+    </div>
+    <div class="course-card">
+      <p class="course-card-label">週末クラス</p>
+      <p class="course-card-date">5/30（土）</p>
+      <p class="course-card-time">10:30〜17:30（計6時間 / 昼休憩1時間）</p>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>項目</th><th>内容</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>受講料</td><td>¥30,800（税込）</td></tr>
+      <tr><td>定員</td><td>6名（最少2名から開講）</td></tr>
+      <tr><td>締め切り</td><td>開催3日前（受講料の入金まで）</td></tr>
+    </tbody>
+  </table>
+
+  <blockquote>入学願書はコルテーヌHPよりダウンロードしてください。</blockquote>
+
+  <div class="schedule-apply">
+    <h2>お申込み・お問い合わせ</h2>
+    <p>
+      <strong>コルテーヌスクール事業部</strong><br />
+      鹿児島市中町４−７ コルテーヌビル４F<br />
+      <a href="tel:0992225858">099-222-5858</a>（9時〜18時）
+    </p>
+    <a class="button primary" href={cortanuUrl} target="_blank" rel="noopener noreferrer">
+      コルテーヌのサイトへ
+    </a>
+  </div>
+</PageLayout>
