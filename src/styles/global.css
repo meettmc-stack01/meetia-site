@@ -756,6 +756,35 @@ h3 {
   font-size: 0.95rem;
 }
 
+.page-body .schedule-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  border: 1px solid rgba(110, 174, 190, 0.2);
+  border-radius: var(--radius);
+  background: white;
+  overflow: hidden;
+}
+
+.page-body .schedule-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(110, 174, 190, 0.14);
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.page-body .schedule-list li:last-child {
+  border-bottom: 0;
+}
+
+.schedule-list-label {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
 .schedule-apply {
   margin-top: 52px;
   padding: 40px;
