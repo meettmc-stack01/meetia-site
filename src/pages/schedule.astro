@@ -6,14 +6,29 @@ const contactUrl = 'https://ws.formzu.net/fgen/S9830388/';
 
 <PageLayout
   title="開催日程"
-  description="出張開催　IMチェック体験会・嗅覚反応分析士入門講座の最新スケジュールをご案内しています。"
+  description="体験会・講座の開催日程をご案内しています。個別リクエストも承ります。"
   sectionLabel="Schedule"
 >
+
+  <div class="schedule-request">
+    <p class="schedule-apply-label">MeetiA主催</p>
+    <h2>体験会・講座の開催リクエスト</h2>
+    <p>
+      現在、個別開催の予定はございません。<br />
+      体験会も講座も、個別の開催リクエストを承ります。日程や形式（対面・オンライン）のご希望など、お気軽にご相談ください。
+    </p>
+    <a class="button primary" href={contactUrl} target="_blank" rel="noopener noreferrer">
+      開催リクエスト・お問い合わせ
+    </a>
+  </div>
+
+  <h2>出張開催（コルテーヌ会場）</h2>
+
   <p class="schedule-venue">
     <strong>会場</strong>　コルテーヌ　ハーブ&amp;アロマテラピースクール
   </p>
 
-  <h2>体験セッション</h2>
+  <h3>体験セッション</h3>
   <p>まずは体質分析を体験したい方へ。</p>
 
   <div class="date-grid">
@@ -48,7 +63,7 @@ const contactUrl = 'https://ws.formzu.net/fgen/S9830388/';
 
   <blockquote>申込〆切：開催3日前</blockquote>
 
-  <h2>講座</h2>
+  <h3>講座</h3>
   <p>嗅覚反応分析士入門講座のスケジュール（1日集中レッスン）です。</p>
 
   <div class="course-cards">
@@ -83,7 +98,7 @@ const contactUrl = 'https://ws.formzu.net/fgen/S9830388/';
 
   <div class="schedule-apply">
     <div class="schedule-apply-block">
-      <p class="schedule-apply-label">上記の日程・会場へ申し込む</p>
+      <p class="schedule-apply-label">コルテーヌ会場の日程へ申し込む</p>
       <h2>コルテーヌへのお申込み</h2>
       <p>
         <strong>コルテーヌスクール事業部</strong><br />
@@ -108,4 +123,5 @@ const contactUrl = 'https://ws.formzu.net/fgen/S9830388/';
       </a>
     </div>
   </div>
+
 </PageLayout>
