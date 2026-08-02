@@ -644,7 +644,15 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 10px 14px;
-  margin: 28px 0 8px;
+  margin: 0 0 8px;
+}
+
+.page-body > p + .theme-nav {
+  margin-top: 20px;
+}
+
+.page-body:has(> .theme-nav:first-child) {
+  padding-top: 22px;
 }
 
 .theme-nav-link {
@@ -696,7 +704,7 @@ h3 {
 .post-list {
   display: grid;
   gap: 18px;
-  margin-top: 32px;
+  margin-top: 22px;
 }
 
 .post-card {
