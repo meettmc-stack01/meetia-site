@@ -21,7 +21,7 @@ When using Obsidian knowledge, read it as reference material, but save public we
 Published blog articles live in:
 
 ```txt
-src/content/blog/
+src/content/blog/YYYY-MM/
 ```
 
 Use this template as the starting point:
@@ -29,6 +29,9 @@ Use this template as the starting point:
 ```txt
 src/content/blog/_template.md
 ```
+
+**Filename (for browsing):** `YYYY-MM-DD_短い日本語.md`  
+Example: `2026-08/2026-08-02_アロマは足りないものを埋める魔法ではない.md`
 
 Article frontmatter should follow this shape:
 
@@ -38,11 +41,13 @@ title: "記事タイトル"
 description: "読みもの一覧や検索結果に表示する短い説明文"
 pubDate: 2026-05-06
 draft: false
-image: "/images/blog/example.webp"
+image: "/images/blog/aroma-is-not-magic.webp"
+slug: aroma-is-not-magic
 ---
 ```
 
-- Use lowercase ASCII filenames with hyphens, such as `rainy-season-aroma-selfcare.md`.
+- The public URL uses `slug` (`/blog/{slug}/`), not the Japanese filename.
+- `slug` is lowercase ASCII with hyphens (e.g. `aroma-is-not-magic`).
 - Set `draft: true` for drafts that should not be published.
 - Set `draft: false` only when the article should appear on the public site.
 - Keep each article focused on one theme when possible.
@@ -57,18 +62,18 @@ Blog images live in:
 public/images/blog/
 ```
 
-Use WebP for final blog images when possible.
+Use WebP for final blog images when possible. Name the image file after the article `slug` (e.g. `aroma-is-not-magic.webp`). Prefer roughly 16:9 (site displays cover at 16:9).
 
 Frontmatter image paths should look like:
 
 ```md
-image: "/images/blog/example.webp"
+image: "/images/blog/aroma-is-not-magic.webp"
 ```
 
 Markdown body image paths should look like:
 
 ```md
-![画像の説明](/images/blog/example.webp)
+![画像の説明](/images/blog/aroma-is-not-magic.webp)
 ```
 
 Do not leave website-referenced images outside `public/images/blog/`.
