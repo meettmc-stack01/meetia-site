@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import PageLayout from '../../layouts/PageLayout.astro';
+import { BLOG_THEME_IDS, themeLabel } from '../../lib/blogThemes';
 
 const posts = (await getCollection('blog'))
   .filter((post) => !post.data.draft)
@@ -16,6 +17,17 @@ const posts = (await getCollection('blog'))
     嗅覚反応分析やIMチェック、精油のこと、季節のセルフケア、ブレンドレシピなど、香りを暮らしに活かすための読みものをまとめています。
   </p>
 
+  <nav class="theme-nav" aria-label="読みもののテーマ">
+    <a class="theme-nav-link is-current" href="/blog/" aria-current="page">すべて</a>
+    {
+      BLOG_THEME_IDS.map((theme) => (
+        <a class="theme-nav-link" href={`/blog/theme/${theme}/`}>
+          {themeLabel(theme)}
+        </a>
+      ))
+    }
+  </nav>
+
   <div class="post-list">
     {
       posts.map((post) => (
@@ -25,12 +37,19 @@ const posts = (await getCollection('blog'))
               <img src={post.data.image} alt="" />
             </a>
           )}
-          <p class="post-date">
-            {post.data.pubDate.toLocaleDateString('ja-JP', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            })}
+          <p class="post-meta">
+            <span class="post-date">
+              {post.data.pubDate.toLocaleDateString('ja-JP', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+              })}
+            </span>
+            {post.data.theme && (
+              <a class="post-theme" href={`/blog/theme/${post.data.theme}/`}>
+                {themeLabel(post.data.theme)}
+              </a>
+            )}
           </p>
           <h2>
             <a href={`/blog/${post.data.slug ?? post.slug}/`}>{post.data.title}</a>

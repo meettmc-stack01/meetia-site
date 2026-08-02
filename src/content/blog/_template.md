@@ -3,6 +3,7 @@ title: "記事タイトル"
 description: "読みもの一覧や検索結果に表示する短い説明文を入れます。"
 pubDate: 2026-05-06
 draft: true
+theme: aroma
 image: "/images/blog/example.webp"
 slug: example-slug
 ---

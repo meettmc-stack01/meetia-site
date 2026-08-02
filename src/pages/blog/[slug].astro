@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import PageLayout from '../../layouts/PageLayout.astro';
+import { themeLabel } from '../../lib/blogThemes';
 
 export async function getStaticPaths() {
   const posts = (await getCollection('blog')).filter((post) => !post.data.draft);
@@ -20,12 +21,21 @@ const { Content } = await render(post);
   description={post.data.description}
   sectionLabel="Journal"
 >
-  <p class="post-date">
-    {post.data.pubDate.toLocaleDateString('ja-JP', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    })}
+  <p class="post-meta">
+    <span class="post-date">
+      {post.data.pubDate.toLocaleDateString('ja-JP', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })}
+    </span>
+    {
+      post.data.theme && (
+        <a class="post-theme" href={`/blog/theme/${post.data.theme}/`}>
+          {themeLabel(post.data.theme)}
+        </a>
+      )
+    }
   </p>
   {
     post.data.image && (

@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../../../layouts/PageLayout.astro';
+import {
+  BLOG_THEME_IDS,
+  isBlogTheme,
+  themeLabel,
+  type BlogTheme,
+} from '../../../lib/blogThemes';
+
+export function getStaticPaths() {
+  return BLOG_THEME_IDS.map((theme) => ({
+    params: { theme },
+  }));
+}
+
+const { theme: themeParam } = Astro.params;
+
+if (!themeParam || !isBlogTheme(themeParam)) {
+  throw new Error(`Unknown blog theme: ${themeParam}`);
+}
+
+const theme = themeParam as BlogTheme;
+const label = themeLabel(theme);
+
+const posts = (await getCollection('blog'))
+  .filter((post) => !post.data.draft && post.data.theme === theme)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<PageLayout
+  title={`${label}の読みもの`}
+  description={`MeetiAの読みもの「${label}」の記事一覧です。`}
+  sectionLabel="Journal"
+>
+  <p>
+    「{label}」に関する読みものです。ほかのテーマも、下のリンクから選べます。
+  </p>
+
+  <nav class="theme-nav" aria-label="読みもののテーマ">
+    <a class="theme-nav-link" href="/blog/">すべて</a>
+    {
+      BLOG_THEME_IDS.map((item) => (
+        <a
+          class:list={['theme-nav-link', { 'is-current': item === theme }]}
+          href={`/blog/theme/${item}/`}
+          aria-current={item === theme ? 'page' : undefined}
+        >
+          {themeLabel(item)}
+        </a>
+      ))
+    }
+  </nav>
+
+  {
+    posts.length === 0 ? (
+      <p class="theme-empty">このテーマの記事は、これから少しずつ増やしていきます。</p>
+    ) : (
+      <div class="post-list">
+        {posts.map((post) => (
+          <article class="post-card">
+            {post.data.image && (
+              <a
+                class="post-card-image"
+                href={`/blog/${post.data.slug ?? post.slug}/`}
+                aria-label={`${post.data.title}を読む`}
+              >
+                <img src={post.data.image} alt="" />
+              </a>
+            )}
+            <p class="post-meta">
+              <span class="post-date">
+                {post.data.pubDate.toLocaleDateString('ja-JP', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </span>
+              <span class="post-theme is-plain">{label}</span>
+            </p>
+            <h2>
+              <a href={`/blog/${post.data.slug ?? post.slug}/`}>{post.data.title}</a>
+            </h2>
+            <p>{post.data.description}</p>
+            <a class="text-link" href={`/blog/${post.data.slug ?? post.slug}/`}>読む</a>
+          </article>
+        ))}
+      </div>
+    )
+  }
+</PageLayout>
