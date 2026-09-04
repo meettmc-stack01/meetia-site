@@ -2,9 +2,10 @@
 import { getCollection, render } from 'astro:content';
 import PageLayout from '../../layouts/PageLayout.astro';
 import { themeLabel } from '../../lib/blogThemes';
+import { isVisiblePost } from '../../lib/blogVisibility';
 
 export async function getStaticPaths() {
-  const posts = (await getCollection('blog')).filter((post) => !post.data.draft);
+  const posts = (await getCollection('blog')).filter(isVisiblePost);
 
   return posts.map((post) => ({
     params: { slug: post.data.slug ?? post.slug },

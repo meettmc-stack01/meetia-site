@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { includeDrafts } from '../lib/blogVisibility';
 
 const contactUrl = 'https://ws.formzu.net/fgen/S9830388/';
 const currentYear = new Date().getFullYear();
@@ -17,6 +18,9 @@ const currentYear = new Date().getFullYear();
     <title>MeetiA | 嗅覚反応分析士入門講座・基礎講座 認定教室</title>
   </head>
   <body>
+    {includeDrafts() && (
+      <p class="preview-banner" role="note">下書き確認用プレビュー（本番ではありません）</p>
+    )}
     <div class="site-header-wrap">
     <header class="site-header">
       <a class="brand" href="/" aria-label="MeetiA トップページ">

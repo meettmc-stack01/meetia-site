@@ -7,6 +7,7 @@ import {
   themeLabel,
   type BlogTheme,
 } from '../../../lib/blogThemes';
+import { isVisiblePost } from '../../../lib/blogVisibility';
 
 export function getStaticPaths() {
   return BLOG_THEME_IDS.map((theme) => ({
@@ -24,7 +25,7 @@ const theme = themeParam as BlogTheme;
 const label = themeLabel(theme);
 
 const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft && post.data.theme === theme)
+  .filter((post) => isVisiblePost(post) && post.data.theme === theme)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 

@@ -2,9 +2,10 @@
 import { getCollection } from 'astro:content';
 import PageLayout from '../../layouts/PageLayout.astro';
 import { BLOG_THEME_IDS, themeLabel } from '../../lib/blogThemes';
+import { isVisiblePost } from '../../lib/blogVisibility';
 
 const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
+  .filter(isVisiblePost)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
