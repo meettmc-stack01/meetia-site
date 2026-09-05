@@ -3,6 +3,13 @@
 dist/
 node_modules/
 
+# microCMS / Cloudflare Worker local secrets and build artifacts
+.env.local
+.local-backups/
+.dev.vars
+.wrangler/
+.wrangler-dryrun/
+
 # Local/generated source images not used by the site
 leaf1 .png
 public/images/blog/pollen-aroma-homeostasis.png

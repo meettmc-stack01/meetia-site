@@ -3,49 +3,98 @@ import { getCollection, render } from 'astro:content';
 import PageLayout from '../../layouts/PageLayout.astro';
 import { themeLabel } from '../../lib/blogThemes';
 import { isVisiblePost } from '../../lib/blogVisibility';
+import { resolveContentSourcePriority, selectBlogSource } from '../../lib/blogSource';
+import { getResolvedPublishedArticles, type ResolvedArticle } from '../../lib/microcms';
+import { sanitizeArticleHtml } from '../../lib/sanitizeArticleHtml';
+
+type MarkdownPost = Awaited<ReturnType<typeof getCollection<'blog'>>>[number];
+type Props =
+  | { source: 'markdown'; post: MarkdownPost }
+  | { source: 'microcms'; post: ResolvedArticle };
 
 export async function getStaticPaths() {
-  const posts = (await getCollection('blog')).filter(isVisiblePost);
+  const priority = resolveContentSourcePriority(import.meta.env.BLOG_SOURCE_PRIORITY);
 
-  return posts.map((post) => ({
-    params: { slug: post.data.slug ?? post.slug },
-    props: { post },
+  // priority='markdown'(移行・照合中)ではmicroCMSを一切参照しない。
+  const markdownPosts =
+    priority === 'markdown'
+      ? (await getCollection('blog')).filter(isVisiblePost).map((post) => ({
+          slug: post.data.slug ?? post.slug,
+          post,
+        }))
+      : [];
+
+  // priority='microcms'(移行完了後)ではmicroCMSだけを完全な正本として扱う。
+  // 取得失敗時はここで例外を投げてビルドを失敗させ、Cloudflare上の直前の正常なデプロイを維持する
+  // (Markdown版へフォールバックしない。公開終了・未移行の記事のページを生成しないため)。
+  if (priority === 'microcms' && (!import.meta.env.MICROCMS_SERVICE_DOMAIN || !import.meta.env.MICROCMS_API_KEY)) {
+    throw new Error(
+      'BLOG_SOURCE_PRIORITY=microcmsですが、MICROCMS_SERVICE_DOMAIN/MICROCMS_API_KEYが未設定です。ビルドを中止します。',
+    );
+  }
+
+  const microCmsPosts =
+    priority === 'microcms'
+      ? (
+          await getResolvedPublishedArticles({
+            serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN ?? '',
+            apiKey: import.meta.env.MICROCMS_API_KEY ?? '',
+          })
+        ).map((post) => ({
+          slug: post.slug,
+          post,
+        }))
+      : [];
+
+  const selected = selectBlogSource(markdownPosts, microCmsPosts, priority);
+
+  return selected.map((entry) => ({
+    params: { slug: entry.slug },
+    props: (
+      priority === 'markdown'
+        ? { source: 'markdown', post: entry.post }
+        : { source: 'microcms', post: entry.post }
+    ) satisfies Props,
   }));
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const { source, post } = Astro.props as Props;
+
+const title = source === 'markdown' ? post.data.title : post.title;
+const description = source === 'markdown' ? post.data.description : post.description;
+const pubDate = source === 'markdown' ? post.data.pubDate : post.pubDate;
+const theme = source === 'markdown' ? post.data.theme : post.theme;
+const imageUrl = source === 'markdown' ? post.data.image : post.eyecatch?.url;
+
+const { Content } = source === 'markdown' ? await render(post) : { Content: undefined };
+const safeContent = source === 'microcms' ? sanitizeArticleHtml(post.content) : '';
 ---
 
-<PageLayout
-  title={post.data.title}
-  description={post.data.description}
-  sectionLabel="Journal"
->
+<PageLayout title={title} description={description} sectionLabel="Journal">
   <p class="post-meta">
     <span class="post-date">
-      {post.data.pubDate.toLocaleDateString('ja-JP', {
+      {pubDate.toLocaleDateString('ja-JP', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
       })}
     </span>
     {
-      post.data.theme && (
-        <a class="post-theme" href={`/blog/theme/${post.data.theme}/`}>
-          {themeLabel(post.data.theme)}
+      theme && (
+        <a class="post-theme" href={`/blog/theme/${theme}/`}>
+          {themeLabel(theme)}
         </a>
       )
     }
   </p>
   {
-    post.data.image && (
+    imageUrl && (
       <figure class="post-hero-image">
-        <img src={post.data.image} alt="" />
+        <img src={imageUrl} alt="" />
       </figure>
     )
   }
-  <Content />
+  {Content ? <Content /> : <div class="post-body" set:html={safeContent} />}
   <p>
     <a href="/blog/">読みもの一覧へ戻る</a>
   </p>
