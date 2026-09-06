@@ -27,6 +27,10 @@
     // 配備する想定(/previewを有効化する唯一の環境)。実配備前にWorker名とホストを確定する。
     "preview": {
       "name": "meetia-site-worker-preview",
+      // workers_dev(*.workers.devサブドメイン)はAccessで保護する前提でtrueのまま維持する。
+      // preview_urlsはバージョンごとに別ホスト名を発行しAccess保護をすり抜けられるため明示的に無効化する。
+      "workers_dev": true,
+      "preview_urls": false,
       "vars": {
         "PREVIEW_ENABLED": "true"
       },
