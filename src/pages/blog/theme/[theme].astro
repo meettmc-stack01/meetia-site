@@ -7,6 +7,9 @@ import {
   themeLabel,
   type BlogTheme,
 } from '../../../lib/blogThemes';
+import { isVisiblePost } from '../../../lib/blogVisibility';
+import { resolveContentSourcePriority, selectBlogSource } from '../../../lib/blogSource';
+import { getResolvedPublishedArticles } from '../../../lib/microcms';
 
 export function getStaticPaths() {
   return BLOG_THEME_IDS.map((theme) => ({
@@ -23,9 +26,52 @@ if (!themeParam || !isBlogTheme(themeParam)) {
 const theme = themeParam as BlogTheme;
 const label = themeLabel(theme);
 
-const posts = (await getCollection('blog'))
-  .filter((post) => !post.data.draft && post.data.theme === theme)
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const priority = resolveContentSourcePriority(import.meta.env.BLOG_SOURCE_PRIORITY);
+
+// priority='markdown'(移行・照合中)ではmicroCMSを一切参照しない。
+const markdownPosts =
+  priority === 'markdown'
+    ? (await getCollection('blog'))
+        .filter((post) => isVisiblePost(post) && post.data.theme === theme)
+        .map((post) => ({
+          slug: post.data.slug ?? post.slug,
+          title: post.data.title,
+          description: post.data.description,
+          pubDate: post.data.pubDate,
+          imageUrl: post.data.image,
+        }))
+    : [];
+
+// priority='microcms'(移行完了後)ではmicroCMSだけを完全な正本として扱う。
+// 取得失敗時はここで例外を投げてビルドを失敗させ、Cloudflare上の直前の正常なデプロイを維持する
+// (Markdown版へフォールバックしない。公開終了・未移行の記事を復活させないため)。
+if (priority === 'microcms' && (!import.meta.env.MICROCMS_SERVICE_DOMAIN || !import.meta.env.MICROCMS_API_KEY)) {
+  throw new Error(
+    'BLOG_SOURCE_PRIORITY=microcmsですが、MICROCMS_SERVICE_DOMAIN/MICROCMS_API_KEYが未設定です。ビルドを中止します。',
+  );
+}
+
+const microCmsPosts =
+  priority === 'microcms'
+    ? (
+        await getResolvedPublishedArticles({
+          serviceDomain: import.meta.env.MICROCMS_SERVICE_DOMAIN ?? '',
+          apiKey: import.meta.env.MICROCMS_API_KEY ?? '',
+        })
+      )
+        .filter((post) => post.theme === theme)
+        .map((post) => ({
+          slug: post.slug,
+          title: post.title,
+          description: post.description,
+          pubDate: post.pubDate,
+          imageUrl: post.eyecatch?.url,
+        }))
+    : [];
+
+const posts = selectBlogSource(markdownPosts, microCmsPosts, priority).sort(
+  (a, b) => b.pubDate.valueOf() - a.pubDate.valueOf(),
+);
 ---
 
 <PageLayout
@@ -59,18 +105,18 @@ const posts = (await getCollection('blog'))
       <div class="post-list">
         {posts.map((post) => (
           <article class="post-card">
-            {post.data.image && (
+            {post.imageUrl && (
               <a
                 class="post-card-image"
-                href={`/blog/${post.data.slug ?? post.slug}/`}
-                aria-label={`${post.data.title}を読む`}
+                href={`/blog/${post.slug}/`}
+                aria-label={`${post.title}を読む`}
               >
-                <img src={post.data.image} alt="" />
+                <img src={post.imageUrl} alt="" />
               </a>
             )}
             <p class="post-meta">
               <span class="post-date">
-                {post.data.pubDate.toLocaleDateString('ja-JP', {
+                {post.pubDate.toLocaleDateString('ja-JP', {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
@@ -79,10 +125,10 @@ const posts = (await getCollection('blog'))
               <span class="post-theme is-plain">{label}</span>
             </p>
             <h2>
-              <a href={`/blog/${post.data.slug ?? post.slug}/`}>{post.data.title}</a>
+              <a href={`/blog/${post.slug}/`}>{post.title}</a>
             </h2>
-            <p>{post.data.description}</p>
-            <a class="text-link" href={`/blog/${post.data.slug ?? post.slug}/`}>読む</a>
+            <p>{post.description}</p>
+            <a class="text-link" href={`/blog/${post.slug}/`}>読む</a>
           </article>
         ))}
       </div>

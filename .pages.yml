@@ -1,0 +1,54 @@
+media:
+  input: public/images/blog
+  output: /images/blog
+
+content:
+  - name: blog
+    label: "ブログ記事"
+    type: collection
+    path: src/content/blog
+    subfolders: true
+    exclude:
+      - "_template.md"
+    format: yaml-frontmatter
+    filename: "{fields.slug}.md"
+    fields:
+      - name: title
+        type: string
+        required: true
+      - name: description
+        type: text
+        required: true
+      - name: pubDate
+        label: "公開日"
+        type: date
+        required: true
+        options:
+          format: yyyy-MM-dd
+      - name: draft
+        type: boolean
+        default: true
+      - name: image
+        label: "アイキャッチ画像"
+        type: image
+      - name: slug
+        type: string
+        required: true
+        pattern: "^[a-z0-9-]+$"
+      - name: theme
+        type: select
+        options:
+          values:
+            - name: aroma
+              label: "アロマテラピー"
+            - name: olfactory
+              label: "嗅覚反応分析"
+            - name: daily
+              label: "日々のこと"
+      - name: body
+        label: "本文"
+        type: rich-text
+    operations:
+      create: true
+      rename: false
+      delete: false

@@ -6,10 +6,21 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "test": "node --test tests/*.test.ts",
+    "worker:dev": "wrangler dev",
+    "worker:build:dry-run": "wrangler deploy --dry-run --outdir=.wrangler-dryrun",
+    "microcms:migrate:dry-run": "node scripts/migrate-microcms-articles.mjs",
+    "microcms:migrate": "node scripts/migrate-microcms-articles.mjs --confirm-microcms-write"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.0.0",
-    "astro": "^5.0.0"
+    "astro": "^5.0.0",
+    "sanitize-html": "^2.17.7"
+  },
+  "devDependencies": {
+    "@types/sanitize-html": "^2.16.1",
+    "@cloudflare/workers-types": "^5.20260905.1",
+    "wrangler": "^4.129.0"
   }
 }

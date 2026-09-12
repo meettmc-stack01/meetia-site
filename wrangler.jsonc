@@ -1,0 +1,46 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // 検証済みPoC(workspace/pages-cms-poc, コミット3b194e3)から移植した構成。
+  // 既存Cloudflare Pagesプロジェクト名(meetia-site)と衝突しないよう、Worker名には"-worker"を付ける。
+  // 実際の配備URLは、Cloudflareへ実配備する担当者が本番用の値へ確定させる。ここには実際のドメイン・Secret値を書かない。
+  "name": "meetia-site-worker",
+  "main": "worker/index.ts",
+  "compatibility_date": "2024-11-01",
+  // sanitize-htmlの内部依存(postcss)がNode核モジュール(fs/path)を参照するため必要。
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    // CSS・画像・一覧/テーマページなど大半のStatic Assetsは
+    // Workerを経由せず直接配信する。個別記事詳細・プレビュー・プレビュー外枠テンプレートだけWorkerを先に通す。
+    // (/preview-shellはWorker内部からASSETS bindingで直接取得する内部テンプレートで、外部への直接公開はWorker側で404にする)
+    "run_worker_first": ["/preview", "/preview/*", "/preview-shell", "/preview-shell/*", "/blog/*"]
+  },
+  // MICROCMS_API_KEY / MICROCMS_SERVICE_DOMAIN は `wrangler secret put` で
+  // 環境ごとに登録するCloudflare Secretとして扱う(このファイルには実値を書かない)。
+  // PREVIEW_ENABLEDは平文の環境変数。トップレベル(env未指定、本番想定)は安全側の"false"に固定する。
+  "vars": {
+    "PREVIEW_ENABLED": "false"
+  },
+  "env": {
+    // 由山さんのmicroCMSプレビュー確認用。既存のCloudflare Access保護済みプレビュー用ホストへ
+    // 配備する想定(/previewを有効化する唯一の環境)。実配備前にWorker名とホストを確定する。
+    "preview": {
+      "name": "meetia-site-worker-preview",
+      // workers_dev(*.workers.devサブドメイン)はAccessで保護する前提でtrueのまま維持する。
+      // preview_urlsはバージョンごとに別ホスト名を発行しAccess保護をすり抜けられるため明示的に無効化する。
+      "workers_dev": true,
+      "preview_urls": false,
+      "vars": {
+        "PREVIEW_ENABLED": "true"
+      },
+      "assets": {
+        "directory": "./dist",
+        "binding": "ASSETS",
+        "run_worker_first": ["/preview", "/preview/*", "/preview-shell", "/preview-shell/*", "/blog/*"]
+      }
+    }
+    // PoCにあった"publication-test"環境は公開・公開終了動作の検証専用だったため移植しない。
+    // 同じ検証はトップレベル設定(PREVIEW_ENABLED="false")で行える。
+  }
+}

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { includeDrafts } from '../lib/blogVisibility';
 
 const frontmatter = Astro.props.frontmatter ?? {};
 const title = Astro.props.title ?? frontmatter.title;
@@ -18,6 +19,9 @@ const currentYear = new Date().getFullYear();
     <title>{title} | MeetiA</title>
   </head>
   <body>
+    {includeDrafts() && (
+      <p class="preview-banner" role="note">下書き確認用プレビュー（本番ではありません）</p>
+    )}
     <div class="site-header-wrap">
     <header class="site-header">
       <a class="brand" href="/" aria-label="MeetiA トップページ">

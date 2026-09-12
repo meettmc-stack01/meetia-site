@@ -79,6 +79,17 @@ a {
   border: 0;
 }
 
+.preview-banner,
+.page-body p.preview-banner {
+  margin: 0;
+  padding: 10px 24px;
+  background: #7a3b1f;
+  color: #fff8f2;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-align: center;
+}
+
 .site-header-wrap {
   position: sticky;
   top: 0;
