@@ -347,7 +347,7 @@ h3 {
   width: 46px;
   height: 46px;
   object-fit: contain;
-  opacity: 0.72;
+  opacity: 0.86;
 }
 
 .entry-icon-green {
@@ -355,9 +355,21 @@ h3 {
   color: var(--color-green);
 }
 
+.entry-icon-green img {
+  width: 52px;
+  height: 52px;
+  opacity: 0.8;
+}
+
 .entry-icon-blue {
   background: rgba(110, 174, 190, 0.14);
   color: var(--color-blue);
+}
+
+.entry-icon-blue img {
+  width: 52px;
+  height: 52px;
+  opacity: 0.8;
 }
 
 .entry-icon-pink {
@@ -384,8 +396,8 @@ h3 {
   margin-top: 10px;
   overflow: hidden;
   background:
-    linear-gradient(90deg, rgba(236, 247, 248, 0.9) 0%, rgba(236, 247, 248, 0.72) 48%, rgba(255, 255, 255, 0.24) 100%),
-    url("/images/leaf1.png") right 32px center / 260px auto no-repeat;
+    linear-gradient(90deg, rgba(236, 247, 248, 0.84) 0%, rgba(236, 247, 248, 0.58) 48%, rgba(255, 255, 255, 0.18) 100%),
+    url("/images/icon-first-time-leaves.svg") right 52px center / 190px auto no-repeat;
 }
 
 .soft-panel {
@@ -1045,8 +1057,8 @@ h3 {
 
   .intro-section {
     background:
-      linear-gradient(90deg, rgba(236, 247, 248, 0.94), rgba(236, 247, 248, 0.78)),
-      url("/images/leaf1.png") right -72px center / 210px auto no-repeat;
+      linear-gradient(90deg, rgba(236, 247, 248, 0.86), rgba(236, 247, 248, 0.64)),
+      url("/images/icon-first-time-leaves.svg") right -18px center / 132px auto no-repeat;
   }
 
   .button-row {
